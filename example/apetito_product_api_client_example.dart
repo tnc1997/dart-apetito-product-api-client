@@ -2,7 +2,7 @@ import 'package:apetito_product_api_client/apetito_product_api_client.dart';
 import 'package:http/http.dart';
 
 Future<void> main() async {
-  final client = await _AuthenticatedClient();
+  final client = _AuthenticatedClient();
 
   final api = ApetitoProductApiClient(
     client: client,

@@ -820,14 +820,16 @@ void main() {
   );
 
   setUpAll(
-    () async {
+    () {
       client = _AuthenticatedClient();
     },
   );
 
-  tearDownAll(() {
-    client.close();
-  });
+  tearDownAll(
+    () {
+      client.close();
+    },
+  );
 }
 
 class _AuthenticatedClient extends BaseClient {
