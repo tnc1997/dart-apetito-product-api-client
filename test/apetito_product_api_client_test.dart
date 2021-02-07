@@ -1,6 +1,5 @@
 import 'package:apetito_product_api_client/apetito_product_api_client.dart';
 import 'package:http/http.dart';
-import 'package:oauth2/oauth2.dart' show clientCredentialsGrant;
 import 'package:test/test.dart';
 
 void main() {
@@ -822,17 +821,25 @@ void main() {
 
   setUpAll(
     () async {
-      client = await clientCredentialsGrant(
-        Uri.https(
-          'AUTHORITY',
-          'PATH',
-        ),
-        'CLIENT_ID',
-        'CLIENT_SECRET',
-        scopes: [
-          'SCOPE',
-        ],
-      );
+      client = _AuthenticatedClient();
     },
   );
+
+  tearDownAll(() {
+    client.close();
+  });
+}
+
+class _AuthenticatedClient extends BaseClient {
+  @override
+  Future<StreamedResponse> send(BaseRequest request) {
+    final _ = Request(
+      request.method,
+      request.url,
+    );
+
+    _.headers['Authorization'] = 'Bearer ACCESS_TOKEN';
+
+    return _.send();
+  }
 }
