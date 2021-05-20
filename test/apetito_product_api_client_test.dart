@@ -3,19 +3,20 @@ import 'package:http/http.dart';
 import 'package:test/test.dart';
 
 void main() {
-  const channelId = 0;
-  const dietId = '';
-  const freeFromId = '';
-  const madeWithoutId = '';
-  const marketVerticalId = '';
-  const mealCategorisationId = '';
-  const mealTypeId = '';
-  const microwaveStageId = '';
-  const nodeId = 0;
-  const nutritionId = '';
-  const productGroupId = 0;
-  const productId = '';
-  const rankingId = '';
+  const channelId = 23535;
+  const dietId = '395';
+  const freeFromId = '59';
+  const madeWithoutId = '62';
+  const marketVerticalId = '95';
+  const mealCategorisationId = '299';
+  const mealTypeId = '113';
+  const microwaveStageId = '1';
+  const nodeId = 27131;
+  const nutritionId = '1';
+  const productGroupId = 20165;
+  const productId = '284';
+  const rankingId = 'breakfast';
+  const warningId = '158';
 
   late ApetitoProductApiClient api;
   late Client client;
@@ -756,6 +757,26 @@ void main() {
               );
             },
           );
+
+          test(
+            'getByIdProductWarnings',
+            () async {
+              await expectLater(
+                api.products.getByIdProductWarnings(productId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getByIdWarnings',
+            () async {
+              await expectLater(
+                api.products.getByIdWarnings(productId),
+                completes,
+              );
+            },
+          );
         },
       );
 
@@ -797,6 +818,51 @@ void main() {
             () async {
               await expectLater(
                 api.rankings.getByIdProductGroups(rankingId),
+                completes,
+              );
+            },
+          );
+        },
+      );
+
+      group(
+        'WarningService',
+        () {
+          test(
+            'get',
+            () async {
+              await expectLater(
+                api.warnings.get(),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getById',
+            () async {
+              await expectLater(
+                api.warnings.getById(warningId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getByIdProductWarnings',
+            () async {
+              await expectLater(
+                api.warnings.getByIdProductWarnings(warningId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getByIdProducts',
+            () async {
+              await expectLater(
+                api.warnings.getByIdProducts(warningId),
                 completes,
               );
             },
