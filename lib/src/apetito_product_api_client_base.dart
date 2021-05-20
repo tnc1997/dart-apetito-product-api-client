@@ -11,6 +11,7 @@ import 'package:apetito_product_api_client/src/services/nutrition_service.dart';
 import 'package:apetito_product_api_client/src/services/product_group_service.dart';
 import 'package:apetito_product_api_client/src/services/product_service.dart';
 import 'package:apetito_product_api_client/src/services/ranking_service.dart';
+import 'package:apetito_product_api_client/src/services/warning_service.dart';
 import 'package:http/http.dart';
 
 class ApetitoProductApiClient {
@@ -72,6 +73,10 @@ class ApetitoProductApiClient {
       );
 
   RankingService get rankings => RankingService(
+        context: _context,
+      );
+
+  WarningService get warnings => WarningService(
         context: _context,
       );
 }

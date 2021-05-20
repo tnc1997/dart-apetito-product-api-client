@@ -1,5 +1,6 @@
 library apetito_product_api_client;
 
+export 'package:apetito_product_api_client/src/apetito_product_api_client_base.dart';
 export 'package:apetito_product_api_client/src/constants/uri_constants.dart';
 export 'package:apetito_product_api_client/src/exceptions/client_exception.dart';
 export 'package:apetito_product_api_client/src/extensions/response_extensions.dart';
@@ -39,4 +40,4 @@ export 'package:apetito_product_api_client/src/services/nutrition_service.dart';
 export 'package:apetito_product_api_client/src/services/product_group_service.dart';
 export 'package:apetito_product_api_client/src/services/product_service.dart';
 export 'package:apetito_product_api_client/src/services/ranking_service.dart';
-export 'package:apetito_product_api_client/src/apetito_product_api_client_base.dart';
+export 'package:apetito_product_api_client/src/services/warning_service.dart';

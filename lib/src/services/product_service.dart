@@ -19,6 +19,8 @@ import 'package:apetito_product_api_client/src/models/product_made_without.dart'
 import 'package:apetito_product_api_client/src/models/product_meal_type.dart';
 import 'package:apetito_product_api_client/src/models/product_microwave_stage.dart';
 import 'package:apetito_product_api_client/src/models/product_nutrition.dart';
+import 'package:apetito_product_api_client/src/models/product_warning.dart';
+import 'package:apetito_product_api_client/src/models/warning.dart';
 
 class ProductService {
   final ApetitoProductApiClientContext _context;
@@ -44,6 +46,17 @@ class ProductService {
   Future<Product> getById(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return Product.fromJson(json.decode(response.body));
+  }
+
+  /// Gets the product that matches a code.
+  Future<Product> getByCode(String code) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/products/code/$code'),
     );
 
     ClientException.checkIsSuccessStatusCode(response);
@@ -244,6 +257,32 @@ class ProductService {
 
     return (json.decode(response.body) as List)
         .map((e) => ProductNutrition.fromJson(e))
+        .toList();
+  }
+
+  /// Gets all the product warning information of the product that matches an id.
+  Future<List<ProductWarning>> getByIdProductWarnings(String id) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/products/$id/productwarnings'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return (json.decode(response.body) as List)
+        .map((e) => ProductWarning.fromJson(e))
+        .toList();
+  }
+
+  /// Gets all the warnings of the product that matches an id.
+  Future<List<Warning>> getByIdWarnings(String id) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/products/$id/warnings'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return (json.decode(response.body) as List)
+        .map((e) => Warning.fromJson(e))
         .toList();
   }
 }
