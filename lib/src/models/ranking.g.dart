@@ -9,7 +9,7 @@ part of 'ranking.dart';
 Ranking _$RankingFromJson(Map<String, dynamic> json) {
   return Ranking(
     id: json['id'] as String,
-    name: json['name'] as String,
+    name: json['name'] as String?,
   );
 }
 

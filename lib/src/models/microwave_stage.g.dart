@@ -9,8 +9,8 @@ part of 'microwave_stage.dart';
 MicrowaveStage _$MicrowaveStageFromJson(Map<String, dynamic> json) {
   return MicrowaveStage(
     id: json['id'] as String,
-    wattage: json['wattage'] as int,
-    stage: json['stage'] as int,
+    wattage: json['wattage'] as int?,
+    stage: json['stage'] as int?,
   );
 }
 

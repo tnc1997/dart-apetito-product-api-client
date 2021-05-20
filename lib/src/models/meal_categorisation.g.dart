@@ -9,7 +9,7 @@ part of 'meal_categorisation.dart';
 MealCategorisation _$MealCategorisationFromJson(Map<String, dynamic> json) {
   return MealCategorisation(
     id: json['id'] as String,
-    name: json['name'] as String,
+    name: json['name'] as String?,
   );
 }
 

@@ -9,7 +9,7 @@ part of 'market_vertical.dart';
 MarketVertical _$MarketVerticalFromJson(Map<String, dynamic> json) {
   return MarketVertical(
     id: json['id'] as String,
-    name: json['name'] as String,
+    name: json['name'] as String?,
   );
 }
 

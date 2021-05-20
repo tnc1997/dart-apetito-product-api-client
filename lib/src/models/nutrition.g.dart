@@ -9,8 +9,8 @@ part of 'nutrition.dart';
 Nutrition _$NutritionFromJson(Map<String, dynamic> json) {
   return Nutrition(
     id: json['id'] as String,
-    name: json['name'] as String,
-    displayOrder: json['displayOrder'] as int,
+    name: json['name'] as String?,
+    displayOrder: json['displayOrder'] as int?,
     referenceIntake: (json['referenceIntake'] as num?)?.toDouble(),
   );
 }

@@ -9,7 +9,7 @@ part of 'made_without.dart';
 MadeWithout _$MadeWithoutFromJson(Map<String, dynamic> json) {
   return MadeWithout(
     id: json['id'] as String,
-    name: json['name'] as String,
+    name: json['name'] as String?,
   );
 }
 

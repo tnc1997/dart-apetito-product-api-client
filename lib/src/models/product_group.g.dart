@@ -9,25 +9,26 @@ part of 'product_group.dart';
 ProductGroup _$ProductGroupFromJson(Map<String, dynamic> json) {
   return ProductGroup(
     id: json['id'] as int,
-    longDescription: json['longDescription'] as String,
-    shortDescription: json['shortDescription'] as String,
-    longName: json['longName'] as String,
-    shortName: json['shortName'] as String,
-    productGroupId: json['productGroupId'] as String,
-    quickFindCode: json['quickFindCode'] as String,
-    released: json['released'] as bool,
+    longDescription: json['longDescription'] as String?,
+    shortDescription: json['shortDescription'] as String?,
+    longName: json['longName'] as String?,
+    shortName: json['shortName'] as String?,
+    productGroupId: json['productGroupId'] as String?,
+    quickFindCode: json['quickFindCode'] as String?,
+    released: json['released'] as bool?,
     rrp: (json['rrp'] as num?)?.toDouble(),
     rrpEur: (json['rrpEur'] as num?)?.toDouble(),
     productGroupMealCategorisation: (json['productGroupMealCategorisation']
-            as List?)
+            as List<dynamic>?)
         ?.map((e) =>
             ProductGroupMealCategorisation.fromJson(e as Map<String, dynamic>))
         .toList(),
-    productGroupMarketVertical: (json['productGroupMarketVertical'] as List?)
-        ?.map((e) =>
-            ProductGroupMarketVertical.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    productGroupRanking: (json['productGroupRanking'] as List?)
+    productGroupMarketVertical:
+        (json['productGroupMarketVertical'] as List<dynamic>?)
+            ?.map((e) =>
+                ProductGroupMarketVertical.fromJson(e as Map<String, dynamic>))
+            .toList(),
+    productGroupRanking: (json['productGroupRanking'] as List<dynamic>?)
         ?.map((e) => ProductGroupRanking.fromJson(e as Map<String, dynamic>))
         .toList(),
   );

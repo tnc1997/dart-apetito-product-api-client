@@ -9,9 +9,9 @@ part of 'node.dart';
 Node _$NodeFromJson(Map<String, dynamic> json) {
   return Node(
     id: json['id'] as int,
-    name: json['name'] as String,
-    image: json['image'] as String,
-    sortOrder: json['sortOrder'] as int,
+    name: json['name'] as String?,
+    image: json['image'] as String?,
+    sortOrder: json['sortOrder'] as int?,
   );
 }
 

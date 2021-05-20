@@ -10,7 +10,7 @@ ProductGroupMarketVertical _$ProductGroupMarketVerticalFromJson(
     Map<String, dynamic> json) {
   return ProductGroupMarketVertical(
     id: json['id'] as String,
-    value: json['value'] as String,
+    value: json['value'] as String?,
     productGroup: json['productGroup'] == null
         ? null
         : ProductGroup.fromJson(json['productGroup'] as Map<String, dynamic>),

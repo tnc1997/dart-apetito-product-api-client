@@ -9,7 +9,7 @@ part of 'diet.dart';
 Diet _$DietFromJson(Map<String, dynamic> json) {
   return Diet(
     id: json['id'] as String,
-    name: json['name'] as String,
+    name: json['name'] as String?,
   );
 }
 

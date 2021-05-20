@@ -9,8 +9,8 @@ part of 'product_nutrition.dart';
 ProductNutrition _$ProductNutritionFromJson(Map<String, dynamic> json) {
   return ProductNutrition(
     id: json['id'] as String,
-    per100G: json['per100G'] as String,
-    perPortion: json['perPortion'] as String,
+    per100G: json['per100G'] as String?,
+    perPortion: json['perPortion'] as String?,
     percentageOfReferenceIntake:
         (json['percentageOfReferenceIntake'] as num?)?.toDouble(),
     product: json['product'] == null

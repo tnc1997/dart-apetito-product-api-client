@@ -9,7 +9,7 @@ part of 'free_from.dart';
 FreeFrom _$FreeFromFromJson(Map<String, dynamic> json) {
   return FreeFrom(
     id: json['id'] as String,
-    name: json['name'] as String,
+    name: json['name'] as String?,
   );
 }
 

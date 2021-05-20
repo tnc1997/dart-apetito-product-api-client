@@ -9,7 +9,7 @@ part of 'product_group_ranking.dart';
 ProductGroupRanking _$ProductGroupRankingFromJson(Map<String, dynamic> json) {
   return ProductGroupRanking(
     id: json['id'] as String,
-    value: json['value'] as int,
+    value: json['value'] as int?,
     productGroup: json['productGroup'] == null
         ? null
         : ProductGroup.fromJson(json['productGroup'] as Map<String, dynamic>),

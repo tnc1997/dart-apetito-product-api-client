@@ -9,41 +9,41 @@ part of 'product.dart';
 Product _$ProductFromJson(Map<String, dynamic> json) {
   return Product(
     id: json['id'] as String,
-    name: json['name'] as String,
-    code: json['code'] as String,
-    description: json['description'] as String,
-    imageUrl: json['imageUrl'] as String,
+    name: json['name'] as String?,
+    code: json['code'] as String?,
+    description: json['description'] as String?,
+    imageUrl: json['imageUrl'] as String?,
     weight: (json['weight'] as num?)?.toDouble(),
-    cookingGuidelines: json['cookingGuidelines'] as String,
+    cookingGuidelines: json['cookingGuidelines'] as String?,
     microwaveCookingInstructions:
-        json['microwaveCookingInstructions'] as String,
-    ovenCookingInstructions: json['ovenCookingInstructions'] as String,
-    storageInstructions: json['storageInstructions'] as String,
-    unitsPerCase: json['unitsPerCase'] as int,
-    plainTextIngredients: json['plainTextIngredients'] as String,
-    htmlIngredients: json['htmlIngredients'] as String,
-    formulation: json['formulation'] as String,
-    isAvailable: json['isAvailable'] as bool,
-    isNew: json['isNew'] as bool,
-    productDiets: (json['productDiets'] as List?)
+        json['microwaveCookingInstructions'] as String?,
+    ovenCookingInstructions: json['ovenCookingInstructions'] as String?,
+    storageInstructions: json['storageInstructions'] as String?,
+    unitsPerCase: json['unitsPerCase'] as int?,
+    plainTextIngredients: json['plainTextIngredients'] as String?,
+    htmlIngredients: json['htmlIngredients'] as String?,
+    formulation: json['formulation'] as String?,
+    isAvailable: json['isAvailable'] as bool?,
+    isNew: json['isNew'] as bool?,
+    productDiets: (json['productDiets'] as List<dynamic>?)
         ?.map((e) => ProductDiet.fromJson(e as Map<String, dynamic>))
         .toList(),
-    productFreeFroms: (json['productFreeFroms'] as List?)
+    productFreeFroms: (json['productFreeFroms'] as List<dynamic>?)
         ?.map((e) => ProductFreeFrom.fromJson(e as Map<String, dynamic>))
         .toList(),
-    productGroups: (json['productGroups'] as List?)
+    productGroups: (json['productGroups'] as List<dynamic>?)
         ?.map((e) => ProductGroup.fromJson(e as Map<String, dynamic>))
         .toList(),
-    productMadeWithouts: (json['productMadeWithouts'] as List?)
+    productMadeWithouts: (json['productMadeWithouts'] as List<dynamic>?)
         ?.map((e) => ProductMadeWithout.fromJson(e as Map<String, dynamic>))
         .toList(),
-    productMealTypes: (json['productMealTypes'] as List?)
+    productMealTypes: (json['productMealTypes'] as List<dynamic>?)
         ?.map((e) => ProductMealType.fromJson(e as Map<String, dynamic>))
         .toList(),
-    productMicrowaveStages: (json['productMicrowaveStages'] as List?)
+    productMicrowaveStages: (json['productMicrowaveStages'] as List<dynamic>?)
         ?.map((e) => ProductMicrowaveStage.fromJson(e as Map<String, dynamic>))
         .toList(),
-    productNutritions: (json['productNutritions'] as List?)
+    productNutritions: (json['productNutritions'] as List<dynamic>?)
         ?.map((e) => ProductNutrition.fromJson(e as Map<String, dynamic>))
         .toList(),
   );

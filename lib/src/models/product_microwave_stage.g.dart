@@ -10,7 +10,7 @@ ProductMicrowaveStage _$ProductMicrowaveStageFromJson(
     Map<String, dynamic> json) {
   return ProductMicrowaveStage(
     id: json['id'] as String,
-    instruction: json['instruction'] as String,
+    instruction: json['instruction'] as String?,
     product: json['product'] == null
         ? null
         : Product.fromJson(json['product'] as Map<String, dynamic>),
