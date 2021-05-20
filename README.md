@@ -10,10 +10,15 @@ A simple usage example:
 
 ```dart
 import 'package:apetito_product_api_client/apetito_product_api_client.dart';
-import 'package:http/http.dart';
+import 'package:oauth2/oauth2.dart';
 
 Future<void> main() async {
-  final client = _AuthenticatedClient();
+  final client = await clientCredentialsGrant(
+    Uri.https('identity.apetito.co.uk', '/connect/token'),
+    'identifier',
+    'secret',
+    scopes: ['Products.Read.All'],
+  );
 
   final api = ApetitoProductApiClient(
     client: client,
@@ -24,20 +29,6 @@ Future<void> main() async {
   }
 
   client.close();
-}
-
-class _AuthenticatedClient extends BaseClient {
-  @override
-  Future<StreamedResponse> send(BaseRequest request) {
-    final _ = Request(
-      request.method,
-      request.url,
-    );
-
-    _.headers['Authorization'] = 'Bearer ACCESS_TOKEN';
-
-    return _.send();
-  }
 }
 ```
 
