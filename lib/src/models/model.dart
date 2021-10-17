@@ -1,9 +1,21 @@
 abstract class Model<T> {
-  final T id;
-
   Model({
     required this.id,
+    this.created,
+    this.creator,
+    this.updated,
+    this.updater,
   });
+
+  final T id;
+
+  DateTime? created;
+
+  String? creator;
+
+  DateTime? updated;
+
+  String? updater;
 
   @override
   bool operator ==(Object other) =>
@@ -12,4 +24,12 @@ abstract class Model<T> {
 
   @override
   int get hashCode => id.hashCode;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'created': created?.toUtc().toIso8601String(),
+        'creator': creator,
+        'updated': updated?.toUtc().toIso8601String(),
+        'updater': updater,
+      };
 }

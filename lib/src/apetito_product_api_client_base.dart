@@ -1,82 +1,100 @@
-import 'package:apetito_product_api_client/src/services/channel_service.dart';
-import 'package:apetito_product_api_client/src/services/diet_service.dart';
-import 'package:apetito_product_api_client/src/services/free_from_service.dart';
-import 'package:apetito_product_api_client/src/services/made_without_service.dart';
-import 'package:apetito_product_api_client/src/services/market_vertical_service.dart';
-import 'package:apetito_product_api_client/src/services/meal_categorisation_service.dart';
-import 'package:apetito_product_api_client/src/services/meal_type_service.dart';
-import 'package:apetito_product_api_client/src/services/microwave_stage_service.dart';
-import 'package:apetito_product_api_client/src/services/node_service.dart';
-import 'package:apetito_product_api_client/src/services/nutrition_service.dart';
-import 'package:apetito_product_api_client/src/services/product_group_service.dart';
-import 'package:apetito_product_api_client/src/services/product_service.dart';
-import 'package:apetito_product_api_client/src/services/ranking_service.dart';
-import 'package:apetito_product_api_client/src/services/warning_service.dart';
 import 'package:http/http.dart';
 
-class ApetitoProductApiClient {
-  final ApetitoProductApiClientContext _context;
+import 'services/allergen_service.dart';
+import 'services/channel_service.dart';
+import 'services/diet_service.dart';
+import 'services/free_from_service.dart';
+import 'services/made_without_service.dart';
+import 'services/market_vertical_service.dart';
+import 'services/meal_categorisation_service.dart';
+import 'services/meal_type_service.dart';
+import 'services/microwave_stage_service.dart';
+import 'services/node_service.dart';
+import 'services/nutrition_service.dart';
+import 'services/precautionary_allergen_statement_service.dart';
+import 'services/product_group_service.dart';
+import 'services/product_service.dart';
+import 'services/ranking_service.dart';
+import 'services/serving_type_service.dart';
+import 'services/warning_service.dart';
 
+class ApetitoProductApiClient {
   ApetitoProductApiClient({
     required Client client,
   }) : _context = ApetitoProductApiClientContext(
           client: client,
         );
 
-  ChannelService get channels => ChannelService(
+  final ApetitoProductApiClientContext _context;
+
+  AllergenService get allergenService => AllergenService(
         context: _context,
       );
 
-  DietService get diets => DietService(
+  ChannelService get channelService => ChannelService(
         context: _context,
       );
 
-  FreeFromService get freeFroms => FreeFromService(
+  DietService get dietService => DietService(
         context: _context,
       );
 
-  MadeWithoutService get madeWithouts => MadeWithoutService(
+  FreeFromService get freeFromService => FreeFromService(
         context: _context,
       );
 
-  MarketVerticalService get marketVerticals => MarketVerticalService(
+  MadeWithoutService get madeWithoutService => MadeWithoutService(
         context: _context,
       );
 
-  MealCategorisationService get mealCategorisations =>
+  MarketVerticalService get marketVerticalService => MarketVerticalService(
+        context: _context,
+      );
+
+  MealCategorisationService get mealCategorisationService =>
       MealCategorisationService(
         context: _context,
       );
 
-  MealTypeService get mealTypes => MealTypeService(
+  MealTypeService get mealTypeService => MealTypeService(
         context: _context,
       );
 
-  MicrowaveStageService get microwaveStages => MicrowaveStageService(
+  MicrowaveStageService get microwaveStageService => MicrowaveStageService(
         context: _context,
       );
 
-  NodeService get nodes => NodeService(
+  NodeService get nodeService => NodeService(
         context: _context,
       );
 
-  NutritionService get nutritions => NutritionService(
+  NutritionService get nutritionService => NutritionService(
         context: _context,
       );
 
-  ProductGroupService get productGroups => ProductGroupService(
+  PrecautionaryAllergenStatementService
+      get precautionaryAllergenStatementService =>
+          PrecautionaryAllergenStatementService(
+            context: _context,
+          );
+
+  ProductGroupService get productGroupService => ProductGroupService(
         context: _context,
       );
 
-  ProductService get products => ProductService(
+  ProductService get productService => ProductService(
         context: _context,
       );
 
-  RankingService get rankings => RankingService(
+  RankingService get rankingService => RankingService(
         context: _context,
       );
 
-  WarningService get warnings => WarningService(
+  ServingTypeService get servingTypeService => ServingTypeService(
+        context: _context,
+      );
+
+  WarningService get warningService => WarningService(
         context: _context,
       );
 }

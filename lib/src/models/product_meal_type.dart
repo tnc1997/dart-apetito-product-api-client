@@ -1,25 +1,46 @@
-import 'package:apetito_product_api_client/src/models/meal_type.dart';
-import 'package:apetito_product_api_client/src/models/model.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'meal_type.dart';
+import 'model.dart';
+import 'product.dart';
 
-part 'product_meal_type.g.dart';
-
-@JsonSerializable()
 class ProductMealType extends Model<String> {
-  Product? product;
-  MealType? mealType;
-
   ProductMealType({
-    required String id,
     this.product,
     this.mealType,
+    required String id,
+    DateTime? created,
+    String? creator,
+    DateTime? updated,
+    String? updater,
   }) : super(
           id: id,
+          created: created,
+          updated: updated,
+          updater: updater,
         );
 
-  factory ProductMealType.fromJson(Map<String, dynamic> json) =>
-      _$ProductMealTypeFromJson(json);
+  Product? product;
 
-  Map<String, dynamic> toJson() => _$ProductMealTypeToJson(this);
+  MealType? mealType;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'product': product,
+        'mealType': mealType,
+        ...super.toJson(),
+      };
+
+  static ProductMealType fromJson(Map<String, dynamic> json) => ProductMealType(
+        product:
+            json['product'] != null ? Product.fromJson(json['product']) : null,
+        mealType: json['mealType'] != null
+            ? MealType.fromJson(json['mealType'])
+            : null,
+        id: json['id'],
+        created:
+            json['created'] != null ? DateTime.parse(json['created']) : null,
+        creator: json['creator'],
+        updated:
+            json['updated'] != null ? DateTime.parse(json['updated']) : null,
+        updater: json['updater'],
+      );
 }

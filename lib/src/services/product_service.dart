@@ -1,73 +1,55 @@
 import 'dart:convert';
 
-import 'package:apetito_product_api_client/src/apetito_product_api_client_base.dart';
-import 'package:apetito_product_api_client/src/constants/uri_constants.dart';
-import 'package:apetito_product_api_client/src/exceptions/client_exception.dart';
-import 'package:apetito_product_api_client/src/models/channel.dart';
-import 'package:apetito_product_api_client/src/models/diet.dart';
-import 'package:apetito_product_api_client/src/models/free_from.dart';
-import 'package:apetito_product_api_client/src/models/made_without.dart';
-import 'package:apetito_product_api_client/src/models/meal_type.dart';
-import 'package:apetito_product_api_client/src/models/microwave_stage.dart';
-import 'package:apetito_product_api_client/src/models/node.dart';
-import 'package:apetito_product_api_client/src/models/nutrition.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
-import 'package:apetito_product_api_client/src/models/product_diet.dart';
-import 'package:apetito_product_api_client/src/models/product_free_from.dart';
-import 'package:apetito_product_api_client/src/models/product_group.dart';
-import 'package:apetito_product_api_client/src/models/product_made_without.dart';
-import 'package:apetito_product_api_client/src/models/product_meal_type.dart';
-import 'package:apetito_product_api_client/src/models/product_microwave_stage.dart';
-import 'package:apetito_product_api_client/src/models/product_nutrition.dart';
-import 'package:apetito_product_api_client/src/models/product_warning.dart';
-import 'package:apetito_product_api_client/src/models/warning.dart';
+import '../apetito_product_api_client_base.dart';
+import '../constants/uri_constants.dart';
+import '../exceptions/client_exception.dart';
+import '../models/allergen.dart';
+import '../models/channel.dart';
+import '../models/diet.dart';
+import '../models/free_from.dart';
+import '../models/made_without.dart';
+import '../models/meal_type.dart';
+import '../models/microwave_stage.dart';
+import '../models/node.dart';
+import '../models/nutrition.dart';
+import '../models/precautionary_allergen_statement.dart';
+import '../models/product.dart';
+import '../models/product_allergen.dart';
+import '../models/product_diet.dart';
+import '../models/product_free_from.dart';
+import '../models/product_group.dart';
+import '../models/product_made_without.dart';
+import '../models/product_meal_type.dart';
+import '../models/product_microwave_stage.dart';
+import '../models/product_nutrition.dart';
+import '../models/product_precautionary_allergen_statement.dart';
+import '../models/product_warning.dart';
+import '../models/warning.dart';
 
 class ProductService {
-  final ApetitoProductApiClientContext _context;
-
   ProductService({
     required ApetitoProductApiClientContext context,
   }) : _context = context;
 
-  /// Gets all the products.
-  Future<List<Product>> get() async {
+  final ApetitoProductApiClientContext _context;
+
+  /// Gets all the allergens of the product that matches an id.
+  Future<List<Allergen>> getAllergensByProductId(String id) async {
     final response = await _context.client.get(
-      Uri.https(authority, '$path/products'),
+      Uri.https(authority, '$path/products/$id/allergens'),
     );
 
     ClientException.checkIsSuccessStatusCode(response);
 
     return (json.decode(response.body) as List)
-        .map((e) => Product.fromJson(e))
+        .map((e) => Allergen.fromJson(e))
         .toList();
   }
 
-  /// Gets the product that matches an id.
-  Future<Product> getById(String id) async {
-    final response = await _context.client.get(
-      Uri.https(authority, '$path/products/$id'),
-    );
-
-    ClientException.checkIsSuccessStatusCode(response);
-
-    return Product.fromJson(json.decode(response.body));
-  }
-
-  /// Gets the product that matches a code.
-  Future<Product> getByCode(String code) async {
-    final response = await _context.client.get(
-      Uri.https(authority, '$path/products/code/$code'),
-    );
-
-    ClientException.checkIsSuccessStatusCode(response);
-
-    return Product.fromJson(json.decode(response.body));
-  }
-
   /// Gets all the channels of the product that matches an id.
-  Future<List<Channel>> getByIdChannels(String id) async {
+  Future<List<Channel>> getChannelsByProductId(String id) async {
     final response = await _context.client.get(
-      Uri.https(authority, '$path/products/$id/catalogs'),
+      Uri.https(authority, '$path/products/$id/channels'),
     );
 
     ClientException.checkIsSuccessStatusCode(response);
@@ -78,7 +60,7 @@ class ProductService {
   }
 
   /// Gets all the diets of the product that matches an id.
-  Future<List<Diet>> getByIdDiets(String id) async {
+  Future<List<Diet>> getDietsByProductId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/diets'),
     );
@@ -91,7 +73,7 @@ class ProductService {
   }
 
   /// Gets all the free froms of the product that matches an id.
-  Future<List<FreeFrom>> getByIdFreeFroms(String id) async {
+  Future<List<FreeFrom>> getFreeFromsByProductId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/freefroms'),
     );
@@ -104,7 +86,7 @@ class ProductService {
   }
 
   /// Gets all the made withouts of the product that matches an id.
-  Future<List<MadeWithout>> getByIdMadeWithouts(String id) async {
+  Future<List<MadeWithout>> getMadeWithoutsByProductId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/madewithouts'),
     );
@@ -117,7 +99,7 @@ class ProductService {
   }
 
   /// Gets all the meal types of the product that matches an id.
-  Future<List<MealType>> getByIdMealTypes(String id) async {
+  Future<List<MealType>> getMealTypesByProductId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/mealtypes'),
     );
@@ -130,7 +112,7 @@ class ProductService {
   }
 
   /// Gets all the microwave stages of the product that matches an id.
-  Future<List<MicrowaveStage>> getByIdMicrowaveStages(String id) async {
+  Future<List<MicrowaveStage>> getMicrowaveStagesByProductId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/microwavestages'),
     );
@@ -143,9 +125,9 @@ class ProductService {
   }
 
   /// Gets all the nodes of the product that matches an id.
-  Future<List<Node>> getByIdNodes(String id) async {
+  Future<List<Node>> getNodesByProductId(String id) async {
     final response = await _context.client.get(
-      Uri.https(authority, '$path/products/$id/catalogcategories'),
+      Uri.https(authority, '$path/products/$id/nodes'),
     );
 
     ClientException.checkIsSuccessStatusCode(response);
@@ -156,7 +138,7 @@ class ProductService {
   }
 
   /// Gets all the nutritions of the product that matches an id.
-  Future<List<Nutrition>> getByIdNutritions(String id) async {
+  Future<List<Nutrition>> getNutritionsByProductId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/nutritions'),
     );
@@ -168,8 +150,59 @@ class ProductService {
         .toList();
   }
 
+  /// Gets all the precautionary allergen statements of the product that matches an id.
+  Future<List<PrecautionaryAllergenStatement>>
+      getPrecautionaryAllergenStatementsByProductId(String id) async {
+    final response = await _context.client.get(
+      Uri.https(
+          authority, '$path/products/$id/precautionaryallergenstatements'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return (json.decode(response.body) as List)
+        .map((e) => PrecautionaryAllergenStatement.fromJson(e))
+        .toList();
+  }
+
+  /// Gets all the product allergen information of the product that matches an id.
+  Future<List<ProductAllergen>> getProductAllergensByProductId(
+      String id) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/products/$id/productallergens'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return (json.decode(response.body) as List)
+        .map((e) => ProductAllergen.fromJson(e))
+        .toList();
+  }
+
+  /// Gets the product that matches a code.
+  Future<Product> getProductByCode(String code) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/products/code/$code'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return Product.fromJson(json.decode(response.body));
+  }
+
+  /// Gets the product that matches an id.
+  Future<Product> getProductById(String id) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/products/$id'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return Product.fromJson(json.decode(response.body));
+  }
+
   /// Gets all the product diet information of the product that matches an id.
-  Future<List<ProductDiet>> getByIdProductDiets(String id) async {
+  Future<List<ProductDiet>> getProductDietsByProductId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/productdiets'),
     );
@@ -182,7 +215,8 @@ class ProductService {
   }
 
   /// Gets all the product free from information of the product that matches an id.
-  Future<List<ProductFreeFrom>> getByIdProductFreeFroms(String id) async {
+  Future<List<ProductFreeFrom>> getProductFreeFromsByProductId(
+      String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/productfreefroms'),
     );
@@ -195,7 +229,7 @@ class ProductService {
   }
 
   /// Gets all the product groups of the product that matches an id.
-  Future<List<ProductGroup>> getByIdProductGroups(String id) async {
+  Future<List<ProductGroup>> getProductGroupsByProductId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/productgroups'),
     );
@@ -208,7 +242,8 @@ class ProductService {
   }
 
   /// Gets all the product made without information of the product that matches an id.
-  Future<List<ProductMadeWithout>> getByIdProductMadeWithouts(String id) async {
+  Future<List<ProductMadeWithout>> getProductMadeWithoutsByProductId(
+      String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/productmadewithouts'),
     );
@@ -221,7 +256,8 @@ class ProductService {
   }
 
   /// Gets all the product meal type information of the product that matches an id.
-  Future<List<ProductMealType>> getByIdProductMealTypes(String id) async {
+  Future<List<ProductMealType>> getProductMealTypesByProductId(
+      String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/productmealtypes'),
     );
@@ -234,7 +270,7 @@ class ProductService {
   }
 
   /// Gets all the product microwave stage information of the product that matches an id.
-  Future<List<ProductMicrowaveStage>> getByIdProductMicrowaveStages(
+  Future<List<ProductMicrowaveStage>> getProductMicrowaveStagesByProductId(
       String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/productmicrowavestages'),
@@ -248,7 +284,8 @@ class ProductService {
   }
 
   /// Gets all the product nutrition information of the product that matches an id.
-  Future<List<ProductNutrition>> getByIdProductNutritions(String id) async {
+  Future<List<ProductNutrition>> getProductNutritionsByProductId(
+      String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/productnutritions'),
     );
@@ -260,8 +297,23 @@ class ProductService {
         .toList();
   }
 
+  /// Gets all the product precautionary allergen statement information of the product that matches an id.
+  Future<List<ProductPrecautionaryAllergenStatement>>
+      getProductPrecautionaryAllergenStatementsByProductId(String id) async {
+    final response = await _context.client.get(
+      Uri.https(authority,
+          '$path/products/$id/productprecautionaryallergenstatements'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return (json.decode(response.body) as List)
+        .map((e) => ProductPrecautionaryAllergenStatement.fromJson(e))
+        .toList();
+  }
+
   /// Gets all the product warning information of the product that matches an id.
-  Future<List<ProductWarning>> getByIdProductWarnings(String id) async {
+  Future<List<ProductWarning>> getProductWarningsByProductId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/productwarnings'),
     );
@@ -273,8 +325,28 @@ class ProductService {
         .toList();
   }
 
+  /// Gets all the products.
+  Future<List<Product>> getProducts({String? query, int? limit}) async {
+    final response = await _context.client.get(
+      Uri.https(
+        authority,
+        '$path/products',
+        {
+          if (query != null) 'query': query.toString(),
+          if (limit != null) 'limit': limit.toString(),
+        },
+      ),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return (json.decode(response.body) as List)
+        .map((e) => Product.fromJson(e))
+        .toList();
+  }
+
   /// Gets all the warnings of the product that matches an id.
-  Future<List<Warning>> getByIdWarnings(String id) async {
+  Future<List<Warning>> getWarningsByProductId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/products/$id/warnings'),
     );

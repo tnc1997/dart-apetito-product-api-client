@@ -1,28 +1,10 @@
-import 'package:apetito_product_api_client/src/models/model.dart';
-import 'package:apetito_product_api_client/src/models/product_group_market_vertical.dart';
-import 'package:apetito_product_api_client/src/models/product_group_meal_categorisation.dart';
-import 'package:apetito_product_api_client/src/models/product_group_ranking.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'model.dart';
+import 'product_group_market_vertical.dart';
+import 'product_group_meal_categorisation.dart';
+import 'product_group_ranking.dart';
 
-part 'product_group.g.dart';
-
-@JsonSerializable()
 class ProductGroup extends Model<int> {
-  String? longDescription;
-  String? shortDescription;
-  String? longName;
-  String? shortName;
-  String? productGroupId;
-  String? quickFindCode;
-  bool? released;
-  double? rrp;
-  double? rrpEur;
-  List<ProductGroupMealCategorisation>? productGroupMealCategorisation;
-  List<ProductGroupMarketVertical>? productGroupMarketVertical;
-  List<ProductGroupRanking>? productGroupRanking;
-
   ProductGroup({
-    required int id,
     this.longDescription,
     this.shortDescription,
     this.longName,
@@ -35,15 +17,86 @@ class ProductGroup extends Model<int> {
     this.productGroupMealCategorisation,
     this.productGroupMarketVertical,
     this.productGroupRanking,
+    required int id,
+    DateTime? created,
+    String? creator,
+    DateTime? updated,
+    String? updater,
   }) : super(
           id: id,
+          created: created,
+          updated: updated,
+          updater: updater,
         );
 
-  factory ProductGroup.fromJson(Map<String, dynamic> json) =>
-      _$ProductGroupFromJson(json);
+  String? longDescription;
+
+  String? shortDescription;
+
+  String? longName;
+
+  String? shortName;
+
+  String? productGroupId;
+
+  String? quickFindCode;
+
+  bool? released;
+
+  double? rrp;
+
+  double? rrpEur;
+
+  List<ProductGroupMealCategorisation>? productGroupMealCategorisation;
+
+  List<ProductGroupMarketVertical>? productGroupMarketVertical;
+
+  List<ProductGroupRanking>? productGroupRanking;
 
   @override
-  String toString() => longName ?? shortName ?? super.toString();
+  Map<String, dynamic> toJson() => {
+        'longDescription': longDescription,
+        'shortDescription': shortDescription,
+        'longName': longName,
+        'shortName': shortName,
+        'productGroupId': productGroupId,
+        'quickFindCode': quickFindCode,
+        'released': released,
+        'rrp': rrp,
+        'rrpEur': rrpEur,
+        'productGroupMealCategorisation': productGroupMealCategorisation,
+        'productGroupMarketVertical': productGroupMarketVertical,
+        'productGroupRanking': productGroupRanking,
+        ...super.toJson(),
+      };
 
-  Map<String, dynamic> toJson() => _$ProductGroupToJson(this);
+  static ProductGroup fromJson(Map<String, dynamic> json) => ProductGroup(
+        longDescription: json['longDescription'],
+        shortDescription: json['shortDescription'],
+        longName: json['longName'],
+        shortName: json['shortName'],
+        productGroupId: json['productGroupId'],
+        quickFindCode: json['quickFindCode'],
+        released: json['released'],
+        rrp: (json['rrp'] as num?)?.toDouble(),
+        rrpEur: (json['rrpEur'] as num?)?.toDouble(),
+        productGroupMealCategorisation:
+            (json['productGroupMealCategorisation'] as List<dynamic>?)
+                ?.map((e) => ProductGroupMealCategorisation.fromJson(e))
+                .toList(),
+        productGroupMarketVertical:
+            (json['productGroupMarketVertical'] as List<dynamic>?)
+                ?.map((e) => ProductGroupMarketVertical.fromJson(e))
+                .toList(),
+        productGroupRanking: (json['productGroupRanking'] as List<dynamic>?)
+            ?.map((e) => ProductGroupRanking.fromJson(e))
+            .toList(),
+        id: json['id'],
+        created:
+            json['created'] != null ? DateTime.parse(json['created']) : null,
+        creator: json['creator'],
+        updated:
+            json['updated'] != null ? DateTime.parse(json['updated']) : null,
+        updater: json['updater'],
+      );
 }

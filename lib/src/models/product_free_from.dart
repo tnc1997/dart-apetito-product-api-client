@@ -1,25 +1,46 @@
-import 'package:apetito_product_api_client/src/models/free_from.dart';
-import 'package:apetito_product_api_client/src/models/model.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'free_from.dart';
+import 'model.dart';
+import 'product.dart';
 
-part 'product_free_from.g.dart';
-
-@JsonSerializable()
 class ProductFreeFrom extends Model<String> {
-  Product? product;
-  FreeFrom? freeFrom;
-
   ProductFreeFrom({
-    required String id,
     this.product,
     this.freeFrom,
+    required String id,
+    DateTime? created,
+    String? creator,
+    DateTime? updated,
+    String? updater,
   }) : super(
           id: id,
+          created: created,
+          updated: updated,
+          updater: updater,
         );
 
-  factory ProductFreeFrom.fromJson(Map<String, dynamic> json) =>
-      _$ProductFreeFromFromJson(json);
+  Product? product;
 
-  Map<String, dynamic> toJson() => _$ProductFreeFromToJson(this);
+  FreeFrom? freeFrom;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'product': product,
+        'freeFrom': freeFrom,
+        ...super.toJson(),
+      };
+
+  static ProductFreeFrom fromJson(Map<String, dynamic> json) => ProductFreeFrom(
+        product:
+            json['product'] != null ? Product.fromJson(json['product']) : null,
+        freeFrom: json['freeFrom'] != null
+            ? FreeFrom.fromJson(json['freeFrom'])
+            : null,
+        id: json['id'],
+        created:
+            json['created'] != null ? DateTime.parse(json['created']) : null,
+        creator: json['creator'],
+        updated:
+            json['updated'] != null ? DateTime.parse(json['updated']) : null,
+        updater: json['updater'],
+      );
 }

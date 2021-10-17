@@ -1,21 +1,32 @@
 import 'dart:convert';
 
-import 'package:apetito_product_api_client/src/apetito_product_api_client_base.dart';
-import 'package:apetito_product_api_client/src/constants/uri_constants.dart';
-import 'package:apetito_product_api_client/src/exceptions/client_exception.dart';
-import 'package:apetito_product_api_client/src/models/microwave_stage.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
-import 'package:apetito_product_api_client/src/models/product_microwave_stage.dart';
+import '../apetito_product_api_client_base.dart';
+import '../constants/uri_constants.dart';
+import '../exceptions/client_exception.dart';
+import '../models/microwave_stage.dart';
+import '../models/product.dart';
+import '../models/product_microwave_stage.dart';
 
 class MicrowaveStageService {
-  final ApetitoProductApiClientContext _context;
-
   MicrowaveStageService({
     required ApetitoProductApiClientContext context,
   }) : _context = context;
 
+  final ApetitoProductApiClientContext _context;
+
+  /// Gets the microwave stage that matches an id.
+  Future<MicrowaveStage> getMicrowaveStageById(String id) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/microwavestages/$id'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return MicrowaveStage.fromJson(json.decode(response.body));
+  }
+
   /// Gets all the microwave stages.
-  Future<List<MicrowaveStage>> get() async {
+  Future<List<MicrowaveStage>> getMicrowaveStages() async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/microwavestages'),
     );
@@ -27,20 +38,9 @@ class MicrowaveStageService {
         .toList();
   }
 
-  /// Gets the microwave stage that matches an id.
-  Future<MicrowaveStage> getById(String id) async {
-    final response = await _context.client.get(
-      Uri.https(authority, '$path/microwavestages/$id'),
-    );
-
-    ClientException.checkIsSuccessStatusCode(response);
-
-    return MicrowaveStage.fromJson(json.decode(response.body));
-  }
-
   /// Gets all the product microwave stage information of the microwave stage that matches an id.
-  Future<List<ProductMicrowaveStage>> getByIdProductMicrowaveStages(
-      String id) async {
+  Future<List<ProductMicrowaveStage>>
+      getProductMicrowaveStagesByMicrowaveStageId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/microwavestages/$id/productmicrowavestages'),
     );
@@ -53,7 +53,7 @@ class MicrowaveStageService {
   }
 
   /// Gets all the products of the microwave stage that matches an id.
-  Future<List<Product>> getByIdProducts(String id) async {
+  Future<List<Product>> getProductsByMicrowaveStageId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/microwavestages/$id/products'),
     );

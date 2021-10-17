@@ -1,21 +1,32 @@
 import 'dart:convert';
 
-import 'package:apetito_product_api_client/src/apetito_product_api_client_base.dart';
-import 'package:apetito_product_api_client/src/constants/uri_constants.dart';
-import 'package:apetito_product_api_client/src/exceptions/client_exception.dart';
-import 'package:apetito_product_api_client/src/models/meal_type.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
-import 'package:apetito_product_api_client/src/models/product_meal_type.dart';
+import '../apetito_product_api_client_base.dart';
+import '../constants/uri_constants.dart';
+import '../exceptions/client_exception.dart';
+import '../models/meal_type.dart';
+import '../models/product.dart';
+import '../models/product_meal_type.dart';
 
 class MealTypeService {
-  final ApetitoProductApiClientContext _context;
-
   MealTypeService({
     required ApetitoProductApiClientContext context,
   }) : _context = context;
 
+  final ApetitoProductApiClientContext _context;
+
+  /// Gets the meal type that matches an id.id:
+  Future<MealType> getMealTypeById(String id) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/mealtypes/$id'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return MealType.fromJson(json.decode(response.body));
+  }
+
   /// Gets all the meal types.
-  Future<List<MealType>> get() async {
+  Future<List<MealType>> getMealTypes() async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/mealtypes'),
     );
@@ -27,19 +38,9 @@ class MealTypeService {
         .toList();
   }
 
-  /// Gets the meal type that matches an id.
-  Future<MealType> getById(String id) async {
-    final response = await _context.client.get(
-      Uri.https(authority, '$path/mealtypes/$id'),
-    );
-
-    ClientException.checkIsSuccessStatusCode(response);
-
-    return MealType.fromJson(json.decode(response.body));
-  }
-
   /// Gets all the product meal type information of the meal type that matches an id.
-  Future<List<ProductMealType>> getByIdProductMealTypes(String id) async {
+  Future<List<ProductMealType>> getProductMealTypesByMealTypeId(
+      String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/mealtypes/$id/productmealtypes'),
     );
@@ -52,7 +53,7 @@ class MealTypeService {
   }
 
   /// Gets all the products of the meal type that matches an id.
-  Future<List<Product>> getByIdProducts(String id) async {
+  Future<List<Product>> getProductsByMealTypeId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/mealtypes/$id/products'),
     );

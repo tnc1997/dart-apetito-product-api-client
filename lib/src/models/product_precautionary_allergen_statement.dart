@@ -1,12 +1,11 @@
-import 'microwave_stage.dart';
 import 'model.dart';
+import 'precautionary_allergen_statement.dart';
 import 'product.dart';
 
-class ProductMicrowaveStage extends Model<String> {
-  ProductMicrowaveStage({
-    this.instruction,
+class ProductPrecautionaryAllergenStatement extends Model<String> {
+  ProductPrecautionaryAllergenStatement({
     this.product,
-    this.microwaveStage,
+    this.precautionaryAllergenStatement,
     required String id,
     DateTime? created,
     String? creator,
@@ -19,28 +18,27 @@ class ProductMicrowaveStage extends Model<String> {
           updater: updater,
         );
 
-  String? instruction;
-
   Product? product;
 
-  MicrowaveStage? microwaveStage;
+  PrecautionaryAllergenStatement? precautionaryAllergenStatement;
 
   @override
   Map<String, dynamic> toJson() => {
-        'instruction': instruction,
         'product': product,
-        'microwaveStage': microwaveStage,
+        'precautionaryAllergenStatement': precautionaryAllergenStatement,
         ...super.toJson(),
       };
 
-  static ProductMicrowaveStage fromJson(Map<String, dynamic> json) =>
-      ProductMicrowaveStage(
-        instruction: json['instruction'],
+  static ProductPrecautionaryAllergenStatement fromJson(
+          Map<String, dynamic> json) =>
+      ProductPrecautionaryAllergenStatement(
         product:
             json['product'] != null ? Product.fromJson(json['product']) : null,
-        microwaveStage: json['microwaveStage'] != null
-            ? MicrowaveStage.fromJson(json['microwaveStage'])
-            : null,
+        precautionaryAllergenStatement:
+            json['precautionaryAllergenStatement'] != null
+                ? PrecautionaryAllergenStatement.fromJson(
+                    json['precautionaryAllergenStatement'])
+                : null,
         id: json['id'],
         created:
             json['created'] != null ? DateTime.parse(json['created']) : null,

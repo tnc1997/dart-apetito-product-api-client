@@ -1,11 +1,15 @@
 import 'model.dart';
 
-class Node extends Model<int> {
-  Node({
+class Catalog extends Model<String> {
+  Catalog({
+    this.catalogId,
     this.name,
-    this.image,
+    this.published,
     this.sortOrder,
-    required int id,
+    this.categoryId,
+    this.categoryImage,
+    this.categoryName,
+    required String id,
     DateTime? created,
     String? creator,
     DateTime? updated,
@@ -17,27 +21,43 @@ class Node extends Model<int> {
           updater: updater,
         );
 
+  int? catalogId;
+
   String? name;
 
-  String? image;
+  bool? published;
 
   int? sortOrder;
+
+  int? categoryId;
+
+  String? categoryImage;
+
+  String? categoryName;
 
   @override
   String toString() => name ?? super.toString();
 
   @override
   Map<String, dynamic> toJson() => {
+        'catalogId': catalogId,
         'name': name,
-        'image': image,
+        'published': published,
         'sortOrder': sortOrder,
+        'categoryId': categoryId,
+        'categoryImage': categoryImage,
+        'categoryName': categoryName,
         ...super.toJson(),
       };
 
-  static Node fromJson(Map<String, dynamic> json) => Node(
+  static Catalog fromJson(Map<String, dynamic> json) => Catalog(
+        catalogId: (json['catalogId'] as num?)?.toInt(),
         name: json['name'],
-        image: json['image'],
+        published: json['published'],
         sortOrder: (json['sortOrder'] as num?)?.toInt(),
+        categoryId: (json['categoryId'] as num?)?.toInt(),
+        categoryImage: json['categoryImage'],
+        categoryName: json['categoryName'],
         id: json['id'],
         created:
             json['created'] != null ? DateTime.parse(json['created']) : null,

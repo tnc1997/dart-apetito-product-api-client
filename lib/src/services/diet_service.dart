@@ -1,21 +1,32 @@
 import 'dart:convert';
 
-import 'package:apetito_product_api_client/src/apetito_product_api_client_base.dart';
-import 'package:apetito_product_api_client/src/constants/uri_constants.dart';
-import 'package:apetito_product_api_client/src/exceptions/client_exception.dart';
-import 'package:apetito_product_api_client/src/models/diet.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
-import 'package:apetito_product_api_client/src/models/product_diet.dart';
+import '../apetito_product_api_client_base.dart';
+import '../constants/uri_constants.dart';
+import '../exceptions/client_exception.dart';
+import '../models/diet.dart';
+import '../models/product.dart';
+import '../models/product_diet.dart';
 
 class DietService {
-  final ApetitoProductApiClientContext _context;
-
   DietService({
     required ApetitoProductApiClientContext context,
   }) : _context = context;
 
+  final ApetitoProductApiClientContext _context;
+
+  /// Gets the diet that matches an id.
+  Future<Diet> getDietById(String id) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/diets/$id'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return Diet.fromJson(json.decode(response.body));
+  }
+
   /// Gets all the diets.
-  Future<List<Diet>> get() async {
+  Future<List<Diet>> getDiets() async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/diets'),
     );
@@ -27,19 +38,8 @@ class DietService {
         .toList();
   }
 
-  /// Gets the diet that matches an id.
-  Future<Diet> getById(String id) async {
-    final response = await _context.client.get(
-      Uri.https(authority, '$path/diets/$id'),
-    );
-
-    ClientException.checkIsSuccessStatusCode(response);
-
-    return Diet.fromJson(json.decode(response.body));
-  }
-
   /// Gets all the product diet information of the diet that matches an id.
-  Future<List<ProductDiet>> getByIdProductDiets(String id) async {
+  Future<List<ProductDiet>> getProductDietsByDietId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/diets/$id/productdiets'),
     );
@@ -52,7 +52,7 @@ class DietService {
   }
 
   /// Gets all the products of the diet that matches an id.
-  Future<List<Product>> getByIdProducts(String id) async {
+  Future<List<Product>> getProductsByDietId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/diets/$id/products'),
     );

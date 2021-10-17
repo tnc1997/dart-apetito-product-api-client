@@ -1,25 +1,45 @@
-import 'package:apetito_product_api_client/src/models/model.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
-import 'package:apetito_product_api_client/src/models/warning.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'model.dart';
+import 'product.dart';
+import 'warning.dart';
 
-part 'product_warning.g.dart';
-
-@JsonSerializable()
 class ProductWarning extends Model<String> {
-  Product? product;
-  Warning? warning;
-
   ProductWarning({
-    required String id,
     this.product,
     this.warning,
+    required String id,
+    DateTime? created,
+    String? creator,
+    DateTime? updated,
+    String? updater,
   }) : super(
           id: id,
+          created: created,
+          updated: updated,
+          updater: updater,
         );
 
-  factory ProductWarning.fromJson(Map<String, dynamic> json) =>
-      _$ProductWarningFromJson(json);
+  Product? product;
 
-  Map<String, dynamic> toJson() => _$ProductWarningToJson(this);
+  Warning? warning;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'product': product,
+        'warning': warning,
+        ...super.toJson(),
+      };
+
+  static ProductWarning fromJson(Map<String, dynamic> json) => ProductWarning(
+        product:
+            json['product'] != null ? Product.fromJson(json['product']) : null,
+        warning:
+            json['warning'] != null ? Warning.fromJson(json['warning']) : null,
+        id: json['id'],
+        created:
+            json['created'] != null ? DateTime.parse(json['created']) : null,
+        creator: json['creator'],
+        updated:
+            json['updated'] != null ? DateTime.parse(json['updated']) : null,
+        updater: json['updater'],
+      );
 }

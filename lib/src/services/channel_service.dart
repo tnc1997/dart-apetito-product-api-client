@@ -1,23 +1,34 @@
 import 'dart:convert';
 
-import 'package:apetito_product_api_client/src/apetito_product_api_client_base.dart';
-import 'package:apetito_product_api_client/src/constants/uri_constants.dart';
-import 'package:apetito_product_api_client/src/exceptions/client_exception.dart';
-import 'package:apetito_product_api_client/src/models/channel.dart';
-import 'package:apetito_product_api_client/src/models/node.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
+import '../apetito_product_api_client_base.dart';
+import '../constants/uri_constants.dart';
+import '../exceptions/client_exception.dart';
+import '../models/channel.dart';
+import '../models/node.dart';
+import '../models/product.dart';
 
 class ChannelService {
-  final ApetitoProductApiClientContext _context;
-
   ChannelService({
     required ApetitoProductApiClientContext context,
   }) : _context = context;
 
-  /// Gets all the channels.
-  Future<List<Channel>> get() async {
+  final ApetitoProductApiClientContext _context;
+
+  /// Gets the channel that matches an id.
+  Future<Channel> getChannelById(int id) async {
     final response = await _context.client.get(
-      Uri.https(authority, '$path/catalogs'),
+      Uri.https(authority, '$path/channels/$id'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return Channel.fromJson(json.decode(response.body));
+  }
+
+  /// Gets all the channels.
+  Future<List<Channel>> getChannels() async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/channels'),
     );
 
     ClientException.checkIsSuccessStatusCode(response);
@@ -27,21 +38,10 @@ class ChannelService {
         .toList();
   }
 
-  /// Gets the channel that matches an id.
-  Future<Channel> getById(int id) async {
-    final response = await _context.client.get(
-      Uri.https(authority, '$path/catalogs/$id'),
-    );
-
-    ClientException.checkIsSuccessStatusCode(response);
-
-    return Channel.fromJson(json.decode(response.body));
-  }
-
   /// Gets all the nodes of the channel that matches an id.
-  Future<List<Node>> getByIdNodes(int id) async {
+  Future<List<Node>> getNodesByChannelId(int id) async {
     final response = await _context.client.get(
-      Uri.https(authority, '$path/catalogs/$id/catalogcategories'),
+      Uri.https(authority, '$path/channels/$id/nodes'),
     );
 
     ClientException.checkIsSuccessStatusCode(response);
@@ -52,9 +52,9 @@ class ChannelService {
   }
 
   /// Gets all the products of the channel that matches an id.
-  Future<List<Product>> getByIdProducts(int id) async {
+  Future<List<Product>> getProductsByChannelId(int id) async {
     final response = await _context.client.get(
-      Uri.https(authority, '$path/catalogs/$id/products'),
+      Uri.https(authority, '$path/channels/$id/products'),
     );
 
     ClientException.checkIsSuccessStatusCode(response);

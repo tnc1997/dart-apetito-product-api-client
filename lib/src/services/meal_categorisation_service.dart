@@ -1,21 +1,32 @@
 import 'dart:convert';
 
-import 'package:apetito_product_api_client/src/apetito_product_api_client_base.dart';
-import 'package:apetito_product_api_client/src/constants/uri_constants.dart';
-import 'package:apetito_product_api_client/src/exceptions/client_exception.dart';
-import 'package:apetito_product_api_client/src/models/meal_categorisation.dart';
-import 'package:apetito_product_api_client/src/models/product_group.dart';
-import 'package:apetito_product_api_client/src/models/product_group_meal_categorisation.dart';
+import '../apetito_product_api_client_base.dart';
+import '../constants/uri_constants.dart';
+import '../exceptions/client_exception.dart';
+import '../models/meal_categorisation.dart';
+import '../models/product_group.dart';
+import '../models/product_group_meal_categorisation.dart';
 
 class MealCategorisationService {
-  final ApetitoProductApiClientContext _context;
-
   MealCategorisationService({
     required ApetitoProductApiClientContext context,
   }) : _context = context;
 
+  final ApetitoProductApiClientContext _context;
+
+  /// Gets the meal categorisation that matches an id.
+  Future<MealCategorisation> getMealCategorisationById(String id) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/mealcategorisations/$id'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return MealCategorisation.fromJson(json.decode(response.body));
+  }
+
   /// Gets all the meal categorisations.
-  Future<List<MealCategorisation>> get() async {
+  Future<List<MealCategorisation>> getMealCategorisations() async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/mealcategorisations'),
     );
@@ -27,20 +38,10 @@ class MealCategorisationService {
         .toList();
   }
 
-  /// Gets the meal categorisation that matches an id.
-  Future<MealCategorisation> getById(String id) async {
-    final response = await _context.client.get(
-      Uri.https(authority, '$path/mealcategorisations/$id'),
-    );
-
-    ClientException.checkIsSuccessStatusCode(response);
-
-    return MealCategorisation.fromJson(json.decode(response.body));
-  }
-
   /// Gets all the product group meal categorisation information of the meal categorisation that matches an id.
   Future<List<ProductGroupMealCategorisation>>
-      getByIdProductGroupMealCategorisations(String id) async {
+      getProductGroupMealCategorisationsByMealCategorisationId(
+          String id) async {
     final response = await _context.client.get(
       Uri.https(authority,
           '$path/mealcategorisations/$id/productgroupmealcategorisations'),
@@ -54,7 +55,8 @@ class MealCategorisationService {
   }
 
   /// Gets all the product groups of the meal categorisation that matches an id.
-  Future<List<ProductGroup>> getByIdProductGroups(String id) async {
+  Future<List<ProductGroup>> getProductGroupsByMealCategorisationId(
+      String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/mealcategorisations/$id/productgroups'),
     );

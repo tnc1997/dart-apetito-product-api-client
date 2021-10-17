@@ -1,7 +1,7 @@
 import 'model.dart';
 
-class Diet extends Model<String> {
-  Diet({
+class Allergen extends Model<String> {
+  Allergen({
     this.name,
     required String id,
     DateTime? created,
@@ -26,7 +26,7 @@ class Diet extends Model<String> {
         ...super.toJson(),
       };
 
-  static Diet fromJson(Map<String, dynamic> json) => Diet(
+  static Allergen fromJson(Map<String, dynamic> json) => Allergen(
         name: json['name'],
         id: json['id'],
         created:

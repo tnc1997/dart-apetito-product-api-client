@@ -1,21 +1,32 @@
 import 'dart:convert';
 
-import 'package:apetito_product_api_client/src/apetito_product_api_client_base.dart';
-import 'package:apetito_product_api_client/src/constants/uri_constants.dart';
-import 'package:apetito_product_api_client/src/exceptions/client_exception.dart';
-import 'package:apetito_product_api_client/src/models/free_from.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
-import 'package:apetito_product_api_client/src/models/product_free_from.dart';
+import '../apetito_product_api_client_base.dart';
+import '../constants/uri_constants.dart';
+import '../exceptions/client_exception.dart';
+import '../models/free_from.dart';
+import '../models/product.dart';
+import '../models/product_free_from.dart';
 
 class FreeFromService {
-  final ApetitoProductApiClientContext _context;
-
   FreeFromService({
     required ApetitoProductApiClientContext context,
   }) : _context = context;
 
+  final ApetitoProductApiClientContext _context;
+
+  /// Gets the free from that matches an id.
+  Future<FreeFrom> getFreeFromById(String id) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/freefroms/$id'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return FreeFrom.fromJson(json.decode(response.body));
+  }
+
   /// Gets all the free froms.
-  Future<List<FreeFrom>> get() async {
+  Future<List<FreeFrom>> getFreeFroms() async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/freefroms'),
     );
@@ -27,19 +38,9 @@ class FreeFromService {
         .toList();
   }
 
-  /// Gets the free from that matches an id.
-  Future<FreeFrom> getById(String id) async {
-    final response = await _context.client.get(
-      Uri.https(authority, '$path/freefroms/$id'),
-    );
-
-    ClientException.checkIsSuccessStatusCode(response);
-
-    return FreeFrom.fromJson(json.decode(response.body));
-  }
-
   /// Gets all the product free from information of the free from that matches an id.
-  Future<List<ProductFreeFrom>> getByIdProductFreeFroms(String id) async {
+  Future<List<ProductFreeFrom>> getProductFreeFromsByFreeFromId(
+      String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/freefroms/$id/productfreefroms'),
     );
@@ -52,7 +53,7 @@ class FreeFromService {
   }
 
   /// Gets all the products of the free from that matches an id.
-  Future<List<Product>> getByIdProducts(String id) async {
+  Future<List<Product>> getProductsByFreeFromId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/freefroms/$id/products'),
     );

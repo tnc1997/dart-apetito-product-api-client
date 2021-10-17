@@ -1,25 +1,47 @@
-import 'package:apetito_product_api_client/src/models/made_without.dart';
-import 'package:apetito_product_api_client/src/models/model.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'made_without.dart';
+import 'model.dart';
+import 'product.dart';
 
-part 'product_made_without.g.dart';
-
-@JsonSerializable()
 class ProductMadeWithout extends Model<String> {
-  Product? product;
-  MadeWithout? madeWithout;
-
   ProductMadeWithout({
-    required String id,
     this.product,
     this.madeWithout,
+    required String id,
+    DateTime? created,
+    String? creator,
+    DateTime? updated,
+    String? updater,
   }) : super(
           id: id,
+          created: created,
+          updated: updated,
+          updater: updater,
         );
 
-  factory ProductMadeWithout.fromJson(Map<String, dynamic> json) =>
-      _$ProductMadeWithoutFromJson(json);
+  Product? product;
 
-  Map<String, dynamic> toJson() => _$ProductMadeWithoutToJson(this);
+  MadeWithout? madeWithout;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'product': product,
+        'madeWithout': madeWithout,
+        ...super.toJson(),
+      };
+
+  static ProductMadeWithout fromJson(Map<String, dynamic> json) =>
+      ProductMadeWithout(
+        product:
+            json['product'] != null ? Product.fromJson(json['product']) : null,
+        madeWithout: json['madeWithout'] != null
+            ? MadeWithout.fromJson(json['madeWithout'])
+            : null,
+        id: json['id'],
+        created:
+            json['created'] != null ? DateTime.parse(json['created']) : null,
+        creator: json['creator'],
+        updated:
+            json['updated'] != null ? DateTime.parse(json['updated']) : null,
+        updater: json['updater'],
+      );
 }

@@ -4,9 +4,10 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:test/test.dart';
 
 void main() {
+  const allergenId = '53';
   const channelId = 23535;
   const dietId = '395';
-  const freeFromId = '59';
+  const freeFromId = '53';
   const madeWithoutId = '62';
   const marketVerticalId = '95';
   const mealCategorisationId = '299';
@@ -14,9 +15,12 @@ void main() {
   const microwaveStageId = '1';
   const nodeId = 27131;
   const nutritionId = '1';
-  const productGroupId = 20165;
-  const productId = '284';
+  const precautionaryAllergenStatementId = '53';
+  const productGroupId = 9249;
+  const productCode = '324100';
+  const productId = '324';
   const rankingId = 'breakfast';
+  const servingTypeId = '160';
   const warningId = '158';
 
   late ApetitoProductApiClient api;
@@ -46,43 +50,88 @@ void main() {
     'services',
     () {
       group(
+        'AllergenService',
+        () {
+          test(
+            'getAllergenById',
+            () async {
+              await expectLater(
+                api.allergenService.getAllergenById(allergenId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getAllergens',
+            () async {
+              await expectLater(
+                api.allergenService.getAllergens(),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getProductAllergensByAllergenId',
+            () async {
+              await expectLater(
+                api.allergenService.getProductAllergensByAllergenId(allergenId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getProductsByAllergenId',
+            () async {
+              await expectLater(
+                api.allergenService.getProductsByAllergenId(allergenId),
+                completes,
+              );
+            },
+          );
+        },
+      );
+
+      group(
         'ChannelService',
         () {
           test(
-            'get',
+            'getChannelById',
             () async {
               await expectLater(
-                api.channels.get(),
+                api.channelService.getChannelById(channelId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getChannels',
             () async {
               await expectLater(
-                api.channels.getById(channelId),
+                api.channelService.getChannels(),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdNodes',
+            'getNodesByChannelId',
             () async {
               await expectLater(
-                api.channels.getByIdNodes(channelId),
+                api.channelService.getNodesByChannelId(channelId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProducts',
+            'getProductsByChannelId',
             () async {
               await expectLater(
-                api.channels.getByIdProducts(channelId),
+                api.channelService.getProductsByChannelId(channelId),
                 completes,
               );
             },
@@ -94,40 +143,40 @@ void main() {
         'DietService',
         () {
           test(
-            'get',
+            'getDietById',
             () async {
               await expectLater(
-                api.diets.get(),
+                api.dietService.getDietById(dietId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getDiets',
             () async {
               await expectLater(
-                api.diets.getById(dietId),
+                api.dietService.getDiets(),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductDiets',
+            'getProductDietsByDietId',
             () async {
               await expectLater(
-                api.diets.getByIdProductDiets(dietId),
+                api.dietService.getProductDietsByDietId(dietId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProducts',
+            'getProductsByDietId',
             () async {
               await expectLater(
-                api.diets.getByIdProducts(dietId),
+                api.dietService.getProductsByDietId(dietId),
                 completes,
               );
             },
@@ -139,40 +188,40 @@ void main() {
         'FreeFromService',
         () {
           test(
-            'get',
+            'getFreeFromById',
             () async {
               await expectLater(
-                api.freeFroms.get(),
+                api.freeFromService.getFreeFromById(freeFromId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getFreeFroms',
             () async {
               await expectLater(
-                api.freeFroms.getById(freeFromId),
+                api.freeFromService.getFreeFroms(),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductFreeFroms',
+            'getProductFreeFromsByFreeFromId',
             () async {
               await expectLater(
-                api.freeFroms.getByIdProductFreeFroms(freeFromId),
+                api.freeFromService.getProductFreeFromsByFreeFromId(freeFromId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProducts',
+            'getProductsByFreeFromId',
             () async {
               await expectLater(
-                api.freeFroms.getByIdProducts(freeFromId),
+                api.freeFromService.getProductsByFreeFromId(freeFromId),
                 completes,
               );
             },
@@ -184,40 +233,42 @@ void main() {
         'MadeWithoutService',
         () {
           test(
-            'get',
+            'getMadeWithoutById',
             () async {
               await expectLater(
-                api.madeWithouts.get(),
+                api.madeWithoutService.getMadeWithoutById(madeWithoutId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getMadeWithouts',
             () async {
               await expectLater(
-                api.madeWithouts.getById(madeWithoutId),
+                api.madeWithoutService.getMadeWithouts(),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductMadeWithouts',
+            'getProductMadeWithoutsByMadeWithoutId',
             () async {
               await expectLater(
-                api.madeWithouts.getByIdProductMadeWithouts(madeWithoutId),
+                api.madeWithoutService
+                    .getProductMadeWithoutsByMadeWithoutId(madeWithoutId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProducts',
+            'getProductsByMadeWithoutId',
             () async {
               await expectLater(
-                api.madeWithouts.getByIdProducts(madeWithoutId),
+                api.madeWithoutService
+                    .getProductMadeWithoutsByMadeWithoutId(madeWithoutId),
                 completes,
               );
             },
@@ -229,41 +280,44 @@ void main() {
         'MarketVerticalService',
         () {
           test(
-            'get',
+            'getMarketVerticalById',
             () async {
               await expectLater(
-                api.marketVerticals.get(),
+                api.marketVerticalService
+                    .getMarketVerticalById(marketVerticalId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getMarketVerticals',
             () async {
               await expectLater(
-                api.marketVerticals.getById(marketVerticalId),
+                api.marketVerticalService.getMarketVerticals(),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductGroupMarketVerticals',
+            'getProductGroupMarketVerticalsByMarketVerticalId',
             () async {
               await expectLater(
-                api.marketVerticals
-                    .getByIdProductGroupMarketVerticals(marketVerticalId),
+                api.marketVerticalService
+                    .getProductGroupMarketVerticalsByMarketVerticalId(
+                        marketVerticalId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductGroups',
+            'getProductGroupsByMarketVerticalId',
             () async {
               await expectLater(
-                api.marketVerticals.getByIdProductGroups(marketVerticalId),
+                api.marketVerticalService
+                    .getProductGroupsByMarketVerticalId(marketVerticalId),
                 completes,
               );
             },
@@ -275,42 +329,45 @@ void main() {
         'MealCategorisationService',
         () {
           test(
-            'get',
+            'getMealCategorisationById',
             () async {
               await expectLater(
-                api.mealCategorisations.get(),
+                api.mealCategorisationService
+                    .getMealCategorisationById(mealCategorisationId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getMealCategorisations',
             () async {
               await expectLater(
-                api.mealCategorisations.getById(mealCategorisationId),
+                api.mealCategorisationService.getMealCategorisations(),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductGroupMealCategorisations',
+            'getProductGroupMealCategorisationsByMealCategorisationId',
             () async {
               await expectLater(
-                api.mealCategorisations.getByIdProductGroupMealCategorisations(
-                    mealCategorisationId),
+                api.mealCategorisationService
+                    .getProductGroupMealCategorisationsByMealCategorisationId(
+                        mealCategorisationId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductGroups',
+            'getProductGroupsByMealCategorisationId',
             () async {
               await expectLater(
-                api.mealCategorisations
-                    .getByIdProductGroups(mealCategorisationId),
+                api.mealCategorisationService
+                    .getProductGroupsByMealCategorisationId(
+                        mealCategorisationId),
                 completes,
               );
             },
@@ -322,40 +379,40 @@ void main() {
         'MealTypeService',
         () {
           test(
-            'get',
+            'getMealTypeById',
             () async {
               await expectLater(
-                api.mealTypes.get(),
+                api.mealTypeService.getMealTypeById(mealTypeId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getMealTypes',
             () async {
               await expectLater(
-                api.mealTypes.getById(mealTypeId),
+                api.mealTypeService.getMealTypes(),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductMealTypes',
+            'getProductMealTypesByMealTypeId',
             () async {
               await expectLater(
-                api.mealTypes.getByIdProductMealTypes(mealTypeId),
+                api.mealTypeService.getProductMealTypesByMealTypeId(mealTypeId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProducts',
+            'getProductsByMealTypeId',
             () async {
               await expectLater(
-                api.mealTypes.getByIdProducts(mealTypeId),
+                api.mealTypeService.getProductsByMealTypeId(mealTypeId),
                 completes,
               );
             },
@@ -367,41 +424,44 @@ void main() {
         'MicrowaveStageService',
         () {
           test(
-            'get',
+            'getMicrowaveStageById',
             () async {
               await expectLater(
-                api.microwaveStages.get(),
+                api.microwaveStageService
+                    .getMicrowaveStageById(microwaveStageId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getMicrowaveStages',
             () async {
               await expectLater(
-                api.microwaveStages.getById(microwaveStageId),
+                api.microwaveStageService.getMicrowaveStages(),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductMicrowaveStages',
+            'getProductMicrowaveStagesByMicrowaveStageId',
             () async {
               await expectLater(
-                api.microwaveStages
-                    .getByIdProductMicrowaveStages(microwaveStageId),
+                api.microwaveStageService
+                    .getProductMicrowaveStagesByMicrowaveStageId(
+                        microwaveStageId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProducts',
+            'getProductsByMicrowaveStageId',
             () async {
               await expectLater(
-                api.microwaveStages.getByIdProducts(microwaveStageId),
+                api.microwaveStageService
+                    .getProductsByMicrowaveStageId(microwaveStageId),
                 completes,
               );
             },
@@ -413,40 +473,40 @@ void main() {
         'NodeService',
         () {
           test(
-            'get',
+            'getChannelsByNodeId',
             () async {
               await expectLater(
-                api.nodes.get(),
+                api.nodeService.getChannelsByNodeId(nodeId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getNodeById',
             () async {
               await expectLater(
-                api.nodes.getById(nodeId),
+                api.nodeService.getNodeById(nodeId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdChannels',
+            'getNodes',
             () async {
               await expectLater(
-                api.nodes.getByIdChannels(nodeId),
+                api.nodeService.getNodes(),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProducts',
+            'getProductsByNodeId',
             () async {
               await expectLater(
-                api.nodes.getByIdProducts(nodeId),
+                api.nodeService.getProductsByNodeId(nodeId),
                 completes,
               );
             },
@@ -458,40 +518,93 @@ void main() {
         'NutritionService',
         () {
           test(
-            'get',
+            'getNutritionById',
             () async {
               await expectLater(
-                api.nutritions.get(),
+                api.nutritionService.getNutritionById(nutritionId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getNutritions',
             () async {
               await expectLater(
-                api.nutritions.getById(nutritionId),
+                api.nutritionService.getNutritions(),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductNutritions',
+            'getProductNutritionsByNutritionId',
             () async {
               await expectLater(
-                api.nutritions.getByIdProductNutritions(nutritionId),
+                api.nutritionService
+                    .getProductNutritionsByNutritionId(nutritionId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProducts',
+            'getProductsByNutritionId',
             () async {
               await expectLater(
-                api.nutritions.getByIdProducts(nutritionId),
+                api.nutritionService.getProductsByNutritionId(nutritionId),
+                completes,
+              );
+            },
+          );
+        },
+      );
+
+      group(
+        'PrecautionaryAllergenStatementService',
+        () {
+          test(
+            'getPrecautionaryAllergenStatementById',
+            () async {
+              await expectLater(
+                api.precautionaryAllergenStatementService
+                    .getPrecautionaryAllergenStatementById(
+                        precautionaryAllergenStatementId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getPrecautionaryAllergenStatements',
+            () async {
+              await expectLater(
+                api.precautionaryAllergenStatementService
+                    .getPrecautionaryAllergenStatements(),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getProductPrecautionaryAllergenStatementsByPrecautionaryAllergenStatementId',
+            () async {
+              await expectLater(
+                api.precautionaryAllergenStatementService
+                    .getProductPrecautionaryAllergenStatementsByPrecautionaryAllergenStatementId(
+                        precautionaryAllergenStatementId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getProductsByPrecautionaryAllergenStatementId',
+            () async {
+              await expectLater(
+                api.precautionaryAllergenStatementService
+                    .getProductsByPrecautionaryAllergenStatementId(
+                        precautionaryAllergenStatementId),
                 completes,
               );
             },
@@ -503,82 +616,88 @@ void main() {
         'ProductGroupService',
         () {
           test(
-            'get',
+            'getMarketVerticalsByProductGroupId',
             () async {
               await expectLater(
-                api.productGroups.get(),
+                api.productGroupService
+                    .getMarketVerticalsByProductGroupId(productGroupId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getMealCategorisationsByProductGroupId',
             () async {
               await expectLater(
-                api.productGroups.getById(productGroupId),
+                api.productGroupService
+                    .getMealCategorisationsByProductGroupId(productGroupId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdMarketVerticals',
+            'getProductGroupById',
             () async {
               await expectLater(
-                api.productGroups.getByIdMarketVerticals(productGroupId),
+                api.productGroupService.getProductGroupById(productGroupId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdMealCategorisations',
+            'getProductGroupMarketVerticalsByProductGroupId',
             () async {
               await expectLater(
-                api.productGroups.getByIdMealCategorisations(productGroupId),
+                api.productGroupService
+                    .getProductGroupMarketVerticalsByProductGroupId(
+                        productGroupId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductGroupMarketVerticals',
+            'getProductGroupMealCategorisationsByProductGroupId',
             () async {
               await expectLater(
-                api.productGroups
-                    .getByIdProductGroupMarketVerticals(productGroupId),
+                api.productGroupService
+                    .getProductGroupMealCategorisationsByProductGroupId(
+                        productGroupId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductGroupMealCategorisations',
+            'getProductGroupRankingsByProductGroupId',
             () async {
               await expectLater(
-                api.productGroups
-                    .getByIdProductGroupMealCategorisations(productGroupId),
+                api.productGroupService
+                    .getProductGroupRankingsByProductGroupId(productGroupId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductGroupRankings',
+            'getProductGroups',
             () async {
               await expectLater(
-                api.productGroups.getByIdProductGroupRankings(productGroupId),
+                api.productGroupService.getProductGroups(),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdRankings',
+            'getRankingsByProductGroupId',
             () async {
               await expectLater(
-                api.productGroups.getByIdRankings(productGroupId),
+                api.productGroupService
+                    .getRankingsByProductGroupId(productGroupId),
                 completes,
               );
             },
@@ -590,190 +709,244 @@ void main() {
         'ProductService',
         () {
           test(
-            'get',
+            'getAllergensByProductId',
             () async {
               await expectLater(
-                api.products.get(),
+                api.productService.getAllergensByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getChannelsByProductId',
             () async {
               await expectLater(
-                api.products.getById(productId),
+                api.productService.getChannelsByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdChannels',
+            'getDietsByProductId',
             () async {
               await expectLater(
-                api.products.getByIdChannels(productId),
+                api.productService.getDietsByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdDiets',
+            'getFreeFromsByProductId',
             () async {
               await expectLater(
-                api.products.getByIdDiets(productId),
+                api.productService.getFreeFromsByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdFreeFroms',
+            'getMadeWithoutsByProductId',
             () async {
               await expectLater(
-                api.products.getByIdFreeFroms(productId),
+                api.productService.getMadeWithoutsByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdMadeWithouts',
+            'getMealTypesByProductId',
             () async {
               await expectLater(
-                api.products.getByIdMadeWithouts(productId),
+                api.productService.getMealTypesByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdMealTypes',
+            'getMicrowaveStagesByProductId',
             () async {
               await expectLater(
-                api.products.getByIdMealTypes(productId),
+                api.productService.getMicrowaveStagesByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdMicrowaveStages',
+            'getNodesByProductId',
             () async {
               await expectLater(
-                api.products.getByIdMicrowaveStages(productId),
+                api.productService.getNodesByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdNodes',
+            'getNutritionsByProductId',
             () async {
               await expectLater(
-                api.products.getByIdNodes(productId),
+                api.productService.getNutritionsByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdNutritions',
+            'getPrecautionaryAllergenStatementsByProductId',
             () async {
               await expectLater(
-                api.products.getByIdNutritions(productId),
+                api.productService
+                    .getPrecautionaryAllergenStatementsByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductDiets',
+            'getProductAllergensByProductId',
             () async {
               await expectLater(
-                api.products.getByIdProductDiets(productId),
+                api.productService.getProductAllergensByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductFreeFroms',
+            'getProductByCode',
             () async {
               await expectLater(
-                api.products.getByIdProductFreeFroms(productId),
+                api.productService.getProductByCode(productCode),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductGroups',
+            'getProductById',
             () async {
               await expectLater(
-                api.products.getByIdProductGroups(productId),
+                api.productService.getProductById(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductMadeWithouts',
+            'getProductDietsByProductId',
             () async {
               await expectLater(
-                api.products.getByIdProductMadeWithouts(productId),
+                api.productService.getProductDietsByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductMealTypes',
+            'getProductFreeFromsByProductId',
             () async {
               await expectLater(
-                api.products.getByIdProductMealTypes(productId),
+                api.productService.getProductFreeFromsByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductMicrowaveStages',
+            'getProductGroupsByProductId',
             () async {
               await expectLater(
-                api.products.getByIdProductMicrowaveStages(productId),
+                api.productService.getProductGroupsByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductNutritions',
+            'getProductMadeWithoutsByProductId',
             () async {
               await expectLater(
-                api.products.getByIdProductNutritions(productId),
+                api.productService.getProductMadeWithoutsByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductWarnings',
+            'getProductMealTypesByProductId',
             () async {
               await expectLater(
-                api.products.getByIdProductWarnings(productId),
+                api.productService.getProductMealTypesByProductId(productId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdWarnings',
+            'getProductMicrowaveStagesByProductId',
             () async {
               await expectLater(
-                api.products.getByIdWarnings(productId),
+                api.productService
+                    .getProductMicrowaveStagesByProductId(productId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getProductNutritionsByProductId',
+            () async {
+              await expectLater(
+                api.productService.getProductNutritionsByProductId(productId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getProductPrecautionaryAllergenStatementsByProductId',
+            () async {
+              await expectLater(
+                api.productService
+                    .getProductPrecautionaryAllergenStatementsByProductId(
+                        productId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getProductWarningsByProductId',
+            () async {
+              await expectLater(
+                api.productService.getProductWarningsByProductId(productId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getProducts',
+            () async {
+              await expectLater(
+                api.productService.getProducts(),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getWarningsByProductId',
+            () async {
+              await expectLater(
+                api.productService.getWarningsByProductId(productId),
                 completes,
               );
             },
@@ -785,40 +958,77 @@ void main() {
         'RankingService',
         () {
           test(
-            'get',
+            'getProductGroupRankingsByRankingId',
             () async {
               await expectLater(
-                api.rankings.get(),
+                api.rankingService
+                    .getProductGroupRankingsByRankingId(rankingId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getProductGroupsByRankingId',
             () async {
               await expectLater(
-                api.rankings.getById(rankingId),
+                api.rankingService.getProductGroupsByRankingId(rankingId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductGroupRankings',
+            'getRankingById',
             () async {
               await expectLater(
-                api.rankings.getByIdProductGroupRankings(rankingId),
+                api.rankingService.getRankingById(rankingId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductGroups',
+            'getRankings',
             () async {
               await expectLater(
-                api.rankings.getByIdProductGroups(rankingId),
+                api.rankingService.getRankings(),
+                completes,
+              );
+            },
+          );
+        },
+      );
+
+      group(
+        'ServingTypeService',
+        () {
+          test(
+            'getProductsByServingTypeId',
+            () async {
+              await expectLater(
+                api.servingTypeService
+                    .getProductsByServingTypeId(servingTypeId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getServingTypeById',
+            () async {
+              await expectLater(
+                api.servingTypeService.getServingTypeById(servingTypeId),
+                completes,
+              );
+            },
+          );
+
+          test(
+            'getServingTypes',
+            () async {
+              await expectLater(
+                api.servingTypeService.getServingTypes(),
                 completes,
               );
             },
@@ -830,40 +1040,40 @@ void main() {
         'WarningService',
         () {
           test(
-            'get',
+            'getProductWarningsByWarningId',
             () async {
               await expectLater(
-                api.warnings.get(),
+                api.warningService.getProductWarningsByWarningId(warningId),
                 completes,
               );
             },
           );
 
           test(
-            'getById',
+            'getProductsByWarningId',
             () async {
               await expectLater(
-                api.warnings.getById(warningId),
+                api.warningService.getProductsByWarningId(warningId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProductWarnings',
+            'getWarningById',
             () async {
               await expectLater(
-                api.warnings.getByIdProductWarnings(warningId),
+                api.warningService.getWarningById(warningId),
                 completes,
               );
             },
           );
 
           test(
-            'getByIdProducts',
+            'getWarnings',
             () async {
               await expectLater(
-                api.warnings.getByIdProducts(warningId),
+                api.warningService.getWarnings(),
                 completes,
               );
             },
@@ -890,8 +1100,8 @@ void main() {
     () async {
       client = await oauth2.clientCredentialsGrant(
         Uri.https('identity.apetito.co.uk', '/connect/token'),
-        'identifier',
-        'secret',
+        'client_id',
+        'client_secret',
         scopes: ['Products.Read.All'],
       );
     },

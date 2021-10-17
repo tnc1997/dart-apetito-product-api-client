@@ -1,7 +1,7 @@
 import 'model.dart';
 
-class Diet extends Model<String> {
-  Diet({
+class ServingType extends Model<String> {
+  ServingType({
     this.name,
     required String id,
     DateTime? created,
@@ -26,7 +26,7 @@ class Diet extends Model<String> {
         ...super.toJson(),
       };
 
-  static Diet fromJson(Map<String, dynamic> json) => Diet(
+  static ServingType fromJson(Map<String, dynamic> json) => ServingType(
         name: json['name'],
         id: json['id'],
         created:

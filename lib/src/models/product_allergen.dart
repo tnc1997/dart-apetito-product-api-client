@@ -1,12 +1,12 @@
-import 'microwave_stage.dart';
+import 'allergen.dart';
 import 'model.dart';
 import 'product.dart';
 
-class ProductMicrowaveStage extends Model<String> {
-  ProductMicrowaveStage({
-    this.instruction,
+class ProductAllergen extends Model<String> {
+  ProductAllergen({
+    this.declaration,
     this.product,
-    this.microwaveStage,
+    this.allergen,
     required String id,
     DateTime? created,
     String? creator,
@@ -19,27 +19,26 @@ class ProductMicrowaveStage extends Model<String> {
           updater: updater,
         );
 
-  String? instruction;
+  String? declaration;
 
   Product? product;
 
-  MicrowaveStage? microwaveStage;
+  Allergen? allergen;
 
   @override
   Map<String, dynamic> toJson() => {
-        'instruction': instruction,
+        'declaration': declaration,
         'product': product,
-        'microwaveStage': microwaveStage,
+        'allergen': allergen,
         ...super.toJson(),
       };
 
-  static ProductMicrowaveStage fromJson(Map<String, dynamic> json) =>
-      ProductMicrowaveStage(
-        instruction: json['instruction'],
+  static ProductAllergen fromJson(Map<String, dynamic> json) => ProductAllergen(
+        declaration: json['declaration'],
         product:
             json['product'] != null ? Product.fromJson(json['product']) : null,
-        microwaveStage: json['microwaveStage'] != null
-            ? MicrowaveStage.fromJson(json['microwaveStage'])
+        allergen: json['allergen'] != null
+            ? Allergen.fromJson(json['allergen'])
             : null,
         id: json['id'],
         created:

@@ -1,7 +1,7 @@
 import 'model.dart';
 
-class Diet extends Model<String> {
-  Diet({
+class Range extends Model<String> {
+  Range({
     this.name,
     required String id,
     DateTime? created,
@@ -26,7 +26,7 @@ class Diet extends Model<String> {
         ...super.toJson(),
       };
 
-  static Diet fromJson(Map<String, dynamic> json) => Diet(
+  static Range fromJson(Map<String, dynamic> json) => Range(
         name: json['name'],
         id: json['id'],
         created:

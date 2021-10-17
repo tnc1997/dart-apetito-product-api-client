@@ -1,24 +1,39 @@
-import 'package:apetito_product_api_client/src/models/model.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'model.dart';
 
-part 'free_from.g.dart';
-
-@JsonSerializable()
 class FreeFrom extends Model<String> {
-  String? name;
-
   FreeFrom({
-    required String id,
     this.name,
+    required String id,
+    DateTime? created,
+    String? creator,
+    DateTime? updated,
+    String? updater,
   }) : super(
           id: id,
+          created: created,
+          updated: updated,
+          updater: updater,
         );
 
-  factory FreeFrom.fromJson(Map<String, dynamic> json) =>
-      _$FreeFromFromJson(json);
+  String? name;
 
   @override
   String toString() => name ?? super.toString();
 
-  Map<String, dynamic> toJson() => _$FreeFromToJson(this);
+  @override
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        ...super.toJson(),
+      };
+
+  static FreeFrom fromJson(Map<String, dynamic> json) => FreeFrom(
+        name: json['name'],
+        id: json['id'],
+        created:
+            json['created'] != null ? DateTime.parse(json['created']) : null,
+        creator: json['creator'],
+        updated:
+            json['updated'] != null ? DateTime.parse(json['updated']) : null,
+        updater: json['updater'],
+      );
 }

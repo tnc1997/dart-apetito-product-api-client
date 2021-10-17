@@ -1,8 +1,11 @@
+import 'catalog.dart';
 import 'model.dart';
+import 'product.dart';
 
-class Diet extends Model<String> {
-  Diet({
-    this.name,
+class ProductCatalog extends Model<String> {
+  ProductCatalog({
+    this.product,
+    this.catalog,
     required String id,
     DateTime? created,
     String? creator,
@@ -15,19 +18,22 @@ class Diet extends Model<String> {
           updater: updater,
         );
 
-  String? name;
+  Product? product;
 
-  @override
-  String toString() => name ?? super.toString();
+  Catalog? catalog;
 
   @override
   Map<String, dynamic> toJson() => {
-        'name': name,
+        'product': product,
+        'catalog': catalog,
         ...super.toJson(),
       };
 
-  static Diet fromJson(Map<String, dynamic> json) => Diet(
-        name: json['name'],
+  static ProductCatalog fromJson(Map<String, dynamic> json) => ProductCatalog(
+        product:
+            json['product'] != null ? Product.fromJson(json['product']) : null,
+        catalog:
+            json['catalog'] != null ? Catalog.fromJson(json['catalog']) : null,
         id: json['id'],
         created:
             json['created'] != null ? DateTime.parse(json['created']) : null,

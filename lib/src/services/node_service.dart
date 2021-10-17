@@ -1,47 +1,23 @@
 import 'dart:convert';
 
-import 'package:apetito_product_api_client/src/apetito_product_api_client_base.dart';
-import 'package:apetito_product_api_client/src/constants/uri_constants.dart';
-import 'package:apetito_product_api_client/src/exceptions/client_exception.dart';
-import 'package:apetito_product_api_client/src/models/channel.dart';
-import 'package:apetito_product_api_client/src/models/node.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
+import '../apetito_product_api_client_base.dart';
+import '../constants/uri_constants.dart';
+import '../exceptions/client_exception.dart';
+import '../models/channel.dart';
+import '../models/node.dart';
+import '../models/product.dart';
 
 class NodeService {
-  final ApetitoProductApiClientContext _context;
-
   NodeService({
     required ApetitoProductApiClientContext context,
   }) : _context = context;
 
-  /// Gets all the nodes.
-  Future<List<Node>> get() async {
-    final response = await _context.client.get(
-      Uri.https(authority, '$path/catalogcategories'),
-    );
-
-    ClientException.checkIsSuccessStatusCode(response);
-
-    return (json.decode(response.body) as List)
-        .map((e) => Node.fromJson(e))
-        .toList();
-  }
-
-  /// Gets the node that matches an id.
-  Future<Node> getById(int id) async {
-    final response = await _context.client.get(
-      Uri.https(authority, '$path/catalogcategories/$id'),
-    );
-
-    ClientException.checkIsSuccessStatusCode(response);
-
-    return Node.fromJson(json.decode(response.body));
-  }
+  final ApetitoProductApiClientContext _context;
 
   /// Gets all the channels of the node that matches an id.
-  Future<List<Channel>> getByIdChannels(int id) async {
+  Future<List<Channel>> getChannelsByNodeId(int id) async {
     final response = await _context.client.get(
-      Uri.https(authority, '$path/catalogcategories/$id/catalogs'),
+      Uri.https(authority, '$path/nodes/$id/channels'),
     );
 
     ClientException.checkIsSuccessStatusCode(response);
@@ -51,10 +27,34 @@ class NodeService {
         .toList();
   }
 
-  /// Gets all the products of the node that matches an id.
-  Future<List<Product>> getByIdProducts(int id) async {
+  /// Gets the node that matches an id.
+  Future<Node> getNodeById(int id) async {
     final response = await _context.client.get(
-      Uri.https(authority, '$path/catalogcategories/$id/products'),
+      Uri.https(authority, '$path/nodes/$id'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return Node.fromJson(json.decode(response.body));
+  }
+
+  /// Gets all the nodes.
+  Future<List<Node>> getNodes() async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/nodes'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return (json.decode(response.body) as List)
+        .map((e) => Node.fromJson(e))
+        .toList();
+  }
+
+  /// Gets all the products of the node that matches an id.
+  Future<List<Product>> getProductsByNodeId(int id) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/nodes/$id/products'),
     );
 
     ClientException.checkIsSuccessStatusCode(response);

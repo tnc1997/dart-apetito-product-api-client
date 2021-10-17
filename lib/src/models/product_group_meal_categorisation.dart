@@ -1,25 +1,48 @@
-import 'package:apetito_product_api_client/src/models/meal_categorisation.dart';
-import 'package:apetito_product_api_client/src/models/model.dart';
-import 'package:apetito_product_api_client/src/models/product_group.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'meal_categorisation.dart';
+import 'model.dart';
+import 'product_group.dart';
 
-part 'product_group_meal_categorisation.g.dart';
-
-@JsonSerializable()
 class ProductGroupMealCategorisation extends Model<String> {
-  ProductGroup? productGroup;
-  MealCategorisation? mealCategorisation;
-
   ProductGroupMealCategorisation({
-    required String id,
     this.productGroup,
     this.mealCategorisation,
+    required String id,
+    DateTime? created,
+    String? creator,
+    DateTime? updated,
+    String? updater,
   }) : super(
           id: id,
+          created: created,
+          updated: updated,
+          updater: updater,
         );
 
-  factory ProductGroupMealCategorisation.fromJson(Map<String, dynamic> json) =>
-      _$ProductGroupMealCategorisationFromJson(json);
+  ProductGroup? productGroup;
 
-  Map<String, dynamic> toJson() => _$ProductGroupMealCategorisationToJson(this);
+  MealCategorisation? mealCategorisation;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'productGroup': productGroup,
+        'mealCategorisation': mealCategorisation,
+        ...super.toJson(),
+      };
+
+  static ProductGroupMealCategorisation fromJson(Map<String, dynamic> json) =>
+      ProductGroupMealCategorisation(
+        productGroup: json['productGroup'] != null
+            ? ProductGroup.fromJson(json['productGroup'])
+            : null,
+        mealCategorisation: json['mealCategorisation'] != null
+            ? MealCategorisation.fromJson(json['mealCategorisation'])
+            : null,
+        id: json['id'],
+        created:
+            json['created'] != null ? DateTime.parse(json['created']) : null,
+        creator: json['creator'],
+        updated:
+            json['updated'] != null ? DateTime.parse(json['updated']) : null,
+        updater: json['updater'],
+      );
 }

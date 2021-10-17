@@ -1,21 +1,32 @@
 import 'dart:convert';
 
-import 'package:apetito_product_api_client/src/apetito_product_api_client_base.dart';
-import 'package:apetito_product_api_client/src/constants/uri_constants.dart';
-import 'package:apetito_product_api_client/src/exceptions/client_exception.dart';
-import 'package:apetito_product_api_client/src/models/nutrition.dart';
-import 'package:apetito_product_api_client/src/models/product.dart';
-import 'package:apetito_product_api_client/src/models/product_nutrition.dart';
+import '../apetito_product_api_client_base.dart';
+import '../constants/uri_constants.dart';
+import '../exceptions/client_exception.dart';
+import '../models/nutrition.dart';
+import '../models/product.dart';
+import '../models/product_nutrition.dart';
 
 class NutritionService {
-  final ApetitoProductApiClientContext _context;
-
   NutritionService({
     required ApetitoProductApiClientContext context,
   }) : _context = context;
 
+  final ApetitoProductApiClientContext _context;
+
+  /// Gets the nutrition that matches an id.id:
+  Future<Nutrition> getNutritionById(String id) async {
+    final response = await _context.client.get(
+      Uri.https(authority, '$path/nutritions/$id'),
+    );
+
+    ClientException.checkIsSuccessStatusCode(response);
+
+    return Nutrition.fromJson(json.decode(response.body));
+  }
+
   /// Gets all the nutritions.
-  Future<List<Nutrition>> get() async {
+  Future<List<Nutrition>> getNutritions() async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/nutritions'),
     );
@@ -27,19 +38,9 @@ class NutritionService {
         .toList();
   }
 
-  /// Gets the nutrition that matches an id.
-  Future<Nutrition> getById(String id) async {
-    final response = await _context.client.get(
-      Uri.https(authority, '$path/nutritions/$id'),
-    );
-
-    ClientException.checkIsSuccessStatusCode(response);
-
-    return Nutrition.fromJson(json.decode(response.body));
-  }
-
   /// Gets all the product nutrition information of the nutrition that matches an id.
-  Future<List<ProductNutrition>> getByIdProductNutritions(String id) async {
+  Future<List<ProductNutrition>> getProductNutritionsByNutritionId(
+      String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/nutritions/$id/productnutritions'),
     );
@@ -52,7 +53,7 @@ class NutritionService {
   }
 
   /// Gets all the products of the nutrition that matches an id.
-  Future<List<Product>> getByIdProducts(String id) async {
+  Future<List<Product>> getProductsByNutritionId(String id) async {
     final response = await _context.client.get(
       Uri.https(authority, '$path/nutritions/$id/products'),
     );
