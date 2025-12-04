@@ -34,4 +34,4 @@ Future<void> main() async {
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/tnc1997/dart-apetito-product-api-client/issues
+[tracker]: https://github.com/Apetito-UK/dart-apetito-product-api-client/issues
