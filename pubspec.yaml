@@ -1,5 +1,5 @@
 name: apetito_product_api_client
-description: A client for accessing the apetito Product API. Please note that the apetito Product API Client is unofficial and not endorsed by apetito.
+description: A client for accessing the apetito Product API.
 version: 1.0.1
 homepage: https://github.com/tnc1997/dart-apetito-product-api-client
 
