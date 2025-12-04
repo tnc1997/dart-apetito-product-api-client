@@ -2,8 +2,6 @@
 
 A client for accessing the apetito Product API.
 
-Please note that the apetito Product API Client is unofficial and not endorsed by apetito.
-
 ## Usage
 
 A simple usage example:
