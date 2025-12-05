@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/Apetito-UK/dart-apetito-product-api-client/compare/v1.0.1...v1.0.2) (2025-12-05)
+
+### Miscellaneous Chores
+
+* update workflow ([a2400f9](https://github.com/Apetito-UK/dart-apetito-product-api-client/commit/a2400f95791981f9d76859941298a8a14342417c))
+
 ## [1.0.1](https://github.com/Apetito-UK/dart-apetito-product-api-client/compare/v1.0.0...v1.0.1) (2025-11-23)
 
 ### Miscellaneous Chores
